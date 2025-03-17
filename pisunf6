@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет - Trust Client</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: #0d0d0d;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .profile-container {
+      background: #1b1b1b;
+      width: 150%;
+      max-width: 650px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(0, 255, 0, 0.2);
+      text-align: center;
+    }
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    .btn {
+      width: 57%;
+      padding: 8px;
+      margin: 8px 0;
+      background: #27ae60;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      transition: 0.0s;
+    }
+    .btn:hover {
+      background: linear-gradient(45deg, #27ae60, #27ae60);
+    }
+    .admin-btn {
+      width: 27%;
+      padding: 8px;
+      margin: 8px 0;
+      background: #27ae60;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      transition: 0.0s;
+    }
+    .admin-btn:hover {
+      background: linear-gradient(45deg, #27ae60, #27ae60);
+    }
+    .key-input-container {
+      margin-top: 20px;
+      max-width: 650px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #27ae60; /* Обводка вокруг */
+      border-radius: 10px;
+      padding: 5px;
+    }
+    .key-input {
+      width: 120%;
+      padding: 10px;
+      margin-left: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: white;
+    }
+    .activate-btn {
+      width: 25%;
+      padding: 10px;
+      margin-left: 20px;
+      background: #27ae60;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+    }
+    .activate-btn:hover {
+      background: linear-gradient(45deg, #27ae60, #27ae60);
+    }
+    .status-message {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #27ae60;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="">
+    <a class="logo" href="index.html">Trust <span>RELEASE</span></a>
+    <ul class="navlist">
+      <li><a style="color: var(--main-color);" href="index1.html">Главная</a></li>
+      <li><a href="vibor.html">Навигация</a></li>
+      <li><a href="https://discord.gg/SVkJ8RFNTB">Дискорд Сервер</a></li>
+      <li><a class="login" href="index2.html">Сменить язык</a></li>
+    </ul>
+  </header>
+
+  <div class="profile-container">
+    <h2>Личный кабинет</h2>
+    <p><b>UID:</b> <span id="uid">—</span></p>
+    <p><b>Логин:</b> <span id="username">—</span></p>
+    <p><b>HWID:</b> <span id="hwid">—</span></p>
+    <p><b>Подписка до:</b> <span id="sub_end">—</span></p>
+
+    <!-- Кнопка для скачивания лаунчера, изначально скрыта -->
+    <button class="btn" id="download-launcher" style="display: none;">Скачать лаунчер</button>
+
+    <button class="btn" id="logout">Выйти</button>
+    <button class="admin-btn" id="admin-panel" style="display: none;">Админ-панель</button>
+
+    <!-- Новый блок для активации ключа -->
+    <div class="key-input-container">
+      <input type="text" id="activation-key" class="key-input" placeholder="Введите ключ активации">
+      <button class="activate-btn" id="activate-key">Активировать</button>
+    </div>
+    <p class="status-message" id="status-message"></p>
+  </div>
+
+  <script src="dashboard.js"></script>
+  <script>
+    // Функция для получения куки по имени
+    function getCookie(name) {
+      let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+      ));
+      return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    // Получаем данные из куки
+    const cookieUsername = getCookie("username");
+    const cookieUid = getCookie("uid");
+    const cookieHwid = getCookie("hwid");
+    const cookieSubEnd = getCookie("sub_end");
+
+    // Если нет логина в куках — перенаправляем на страницу входа
+    if (!cookieUsername) {
+      alert("Сессия истекла! Войдите снова.");
+      window.location.href = "login.html";
+    } else {
+      // Подставляем данные на страницу
+      document.getElementById("username").textContent = cookieUsername;
+      document.getElementById("uid").textContent = cookieUid || "Не найдено";
+      document.getElementById("hwid").textContent = cookieHwid || "Не найдено";
+      document.getElementById("sub_end").textContent = cookieSubEnd || "Нет подписки";
+
+      // Загружаем данные об аккаунтах с сервера
+      fetch('https://raw.githubusercontent.com/Artem-Russiun/gayporno/refs/heads/main/accounts.json')
+        .then(response => response.json())
+        .then(data => {
+          // Находим аккаунт по имени пользователя (ключ в объекте)
+          const userAccount = data[cookieUsername];
+          if (userAccount) {
+            // Если у пользователя подписка ("yes") – показываем кнопку скачивания
+            if (userAccount.havesub === "yes") {
+              document.getElementById("download-launcher").style.display = "inline-block";
+            } else {
+              document.getElementById("download-launcher").style.display = "none";
+            }
+          }
+        })
+        .catch(error => console.error('Ошибка при загрузке данных пользователя:', error));
+    }
+
+    // Обработка кнопки "Выйти"
+    document.getElementById("logout").addEventListener("click", function() {
+      document.cookie = "username=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      document.cookie = "uid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      document.cookie = "hwid=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      document.cookie = "sub_end=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      window.location.href = "index.html";
+    });
+
+    // Обработка кнопки "Скачать лаунчер"
+    document.getElementById("download-launcher").addEventListener("click", function() {
+      window.location.href = "https://example.com/launcher.exe"; // Укажите реальную ссылку на лаунчер
+    });
+
+    // Обработка активации ключа
+// Обработка активации ключа
+// Пример кода для активации ключа и обновления файла на GitHub
+document.getElementById("activate-key").addEventListener("click", async function() {
+    // Получаем значение ключа из инпута
+    const activationKey = document.getElementById("activation-key").value.trim();
+    const statusMessage = document.getElementById("status-message");
+
+    if (!activationKey) {
+        statusMessage.textContent = "Пожалуйста, введите ключ активации!";
+        return;
+    }
+	
+    try {
+        // Загружаем текущие данные о ключах с GitHub
+        const response = await fetch("https://api.github.com/repos/Artem-Russiun/gayporno/contents/keys.json?ref=main");
+
+
+        const data = await response.json();
+        const decodedContent = atob(data.content);
+        const keysData = JSON.parse(decodedContent);
+
+        if (!keysData[activationKey]) {
+            statusMessage.textContent = "Ошибка: ключ не найден.";
+            return;
+        }
+
+        let keyData = keysData[activationKey];
+
+        if (keyData.status === "noactivated") {
+            keyData.status = "activated";
+            keyData.activation_date = new Date().toISOString().split("T")[0];
+
+            if (keyData.days !== "forever") {
+                const currentDate = new Date();
+                currentDate.setDate(currentDate.getDate() + Number(keyData.days));
+                keyData.expiration_date = currentDate.toISOString().split("T")[0];
+            }
+
+            // Асинхронное обновление ключа на GitHub
+            await updateKeyStatusOnGitHub(activationKey, keysData, data.sha);
+
+            statusMessage.textContent = `Ключ ${activationKey} успешно активирован! Подписка действует до: ${keyData.expiration_date || "не указана"}`;
+        } else {
+            statusMessage.textContent = "Ошибка: ключ уже активирован.";
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        statusMessage.textContent = "Ошибка при активации ключа.";
+    }
+	
+    // Загружаем текущие данные о ключах с GitHub
+    fetch("https://api.github.com/repos/Artem-Russiun/gayporno/contents/keys.json?ref=main")
+        .then(response => response.json())
+        .then(data => {
+            const base64Content = data.content; // Содержимое в base64
+            const decodedContent = atob(base64Content); // Декодируем из base64 в строку JSON
+            const keysData = JSON.parse(decodedContent); // Преобразуем строку в объект
+
+            // Проверяем, существует ли такой ключ в данных
+            if (keysData[activationKey]) {
+                let keyData = keysData[activationKey];
+
+                if (keyData.status === "noactivated") {
+                    // "Активируем" ключ локально
+                    keyData.status = "activated";
+                    keyData.activation_date = new Date().toISOString().split("T")[0];
+
+                    // Если срок действия указан числом, можно вычислить дату окончания
+                    if (keyData.days !== "forever") {
+                        const currentDate = new Date();
+                        currentDate.setDate(currentDate.getDate() + Number(keyData.days));
+                        keyData.expiration_date = currentDate.toISOString().split("T")[0];
+                    }
+
+                    // Загружаем данные об аккаунтах с GitHub
+                    fetch("https://api.github.com/repos/Artem-Russiun/gayporno/contents/accounts.json?ref=main")
+                        .then(response => response.json())
+                        .then(accountData => {
+                            const base64AccountsContent = accountData.content; // Содержимое аккаунтов в base64
+                            const decodedAccountsContent = atob(base64AccountsContent); // Декодируем в строку JSON
+                            const accountsData = JSON.parse(decodedAccountsContent); // Преобразуем строку в объект
+
+                            const username = getCookie("username"); // Получаем имя пользователя из cookie
+
+                            const userAccount = accountsData[username]; // Находим аккаунт пользователя
+	
+                            if (userAccount) {
+                                // Обновляем данные аккаунта пользователя
+                                userAccount.key = activationKey;
+                                userAccount.havesub = "yes"; // Обновляем статус подписки
+                                userAccount.sub_end = keyData.expiration_date || "no"; // Устанавливаем дату окончания подписки
+
+                                // Обновляем содержимое файла с аккаунтами
+                                const updatedAccountsContent = JSON.stringify(accountsData, null, 2);
+                                const base64UpdatedAccountsContent = btoa(updatedAccountsContent); // Переводим обратно в base64
+
+                                // Обновляем файл на GitHub
+                                fetch("https://api.github.com/repos/Artem-Russiun/gayporno/contents/accounts.json", {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Authorization': `token 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`, // Ваш токен
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        message: "Update user account after key activation",
+                                        content: base64UpdatedAccountsContent,
+                                        sha: accountData.sha // Это SHA старого файла
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(result => {
+                                    statusMessage.textContent = `Ключ ${activationKey} успешно активирован! Подписка действует до: ${userAccount.sub_end}`;
+                                })
+                                .catch(error => {
+                                    console.error('Ошибка при обновлении файла аккаунтов:', error);
+                                    statusMessage.textContent = "Ошибка при активации ключа.";
+                                });
+                            } else {
+                                statusMessage.textContent = "Ошибка: аккаунт не найден.";
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Ошибка при загрузке данных с аккаунтов с GitHub:', error);
+                            statusMessage.textContent = "Ошибка при активации ключа.";
+                        });
+                } else {
+                    statusMessage.textContent = "Ошибка: ключ уже активирован.";
+                }
+            } else {
+                statusMessage.textContent = "Ошибка: ключ не найден.";
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке данных с GitHub:', error);
+            statusMessage.textContent = "Ошибка при активации ключа.";
+        });
+});
+
+
+// Функция для обновления статуса ключа на GitHub через API
+async function updateKeyStatusOnGitHub(activationKey, updatedKeysData, sha) {
+    const repo = 'Artem-Russiun/gayporno';
+    const path = 'keys.json';
+    const token = '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';
+
+    try {
+        const base64UpdatedContent = btoa(JSON.stringify(updatedKeysData, null, 2));
+
+        const response = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: 'Активирован ключ ' + activationKey,
+                sha: sha,
+                content: base64UpdatedContent
+            })
+        });
+
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || "Ошибка при обновлении файла");
+
+    } catch (error) {
+
+    }
+}
+
+  </script>
+</body>
+</html>
