@@ -1,0 +1,11 @@
+{
+    "\u0439\u0446\u0443\u0439\u0446\u0443": {
+        "password": "123",
+        "havesub": "no"
+    },
+    "123": {
+        "password": "12",
+        "havesub": "no",
+        "banned": true
+    }
+}

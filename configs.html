@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configs - Elysium Client</title>
+    <link rel="shortcut icon" href="img/ellogo.png">
+    <link href='boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css2@family=Material+Symbols+Outlined%253Aopsz,wght,FILL,GRAD@24,400,1,0.html">
+    <link rel="stylesheet" href="css/faq-1.css@1703621005.css">
+</head>
+<body>
+
+    <div class="preloader">
+        <div class="preloader__row">
+          <div class="preloader__item"></div>
+          <div class="preloader__item"></div>
+        </div>
+      </div>
+
+    <header class="">
+        <a class="logo" href="index1.html">Elysium <span>Client</span></a>
+        <ul class="navlist">
+            <li><a href="index1.html">Главная</a></li>
+            <li><a style="color: var(--main-color);" href="configs.html">Конфиги</a></li>
+            <li><a href="https://discord.gg/Jp48Rv8VJC">Дискорд сервер</a></li>
+            <!--<li><a class="login" href="">Авторизация</a></li>-->
+        </ul>
+    </header>
+
+    <!-- Секция #1 - Конфиги Основное -->
+    <section id="main">
+        <div class="page-text">
+            <h1 class="main-text anim">Конфиги сообщества</h1>
+            <p class="desc-text anim">Здесь вы сможете найти конфигурации других юзеров <br> для лучшего понятия работы сервиса</p>
+        </div>
+        <div id="faq-u">
+            <div class="faq">
+                <div class="question">
+                    <h2 class="qatitle">Конфигурации на Reallyworld</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewbox="0 0 24 24" style="fill: rgb(255, 255, 255);"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
+                </div>
+                <div class="answer">
+                    <p><a class="main-btn install anim" href="https://cdn.discordapp.com/attachments/1190740321911455845/1190744792741724311/muslim.cfg?ex=65a2ea81&is=65907581&hm=df0b64f0ef364665b7ac559b64189a34ff11c3203224a1a0efd871bfcf1f762b&"><span><i class="bx bxs-download"></i></span> Конфиг 1</a>
+                        <br><p><a class="main-btn install anim" href="https://cdn.discordapp.com/attachments/1190740321911455845/1190740597447872532/rw.cfg?ex=65a2e699&is=65907199&hm=4013f4685cde7d5cc4ccdf7e37395c2451649b23f6efaf9692d8750fc3f62dda&"><span><i class="bx bxs-download"></i></span> Конфиг 2</a>
+                        <br><p><a class="main-btn install anim" href="https://moneyz.pidors.fun/Demwkn/govonwqr31r2748923238428739982398778923798432798432798432798432789324789234789"><span><i class="bx bxs-download"></i></span> Конфиг 3</a>
+                    </p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question">
+                    <h2 class="qatitle">Конфигурации на FunTime</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewbox="0 0 24 24" style="fill: rgb(255, 255, 255);"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
+                </div>
+                <div class="answer">
+                    <p><a class="main-btn install anim" href="https://cdn.discordapp.com/attachments/1190740321911455845/1190744728245899365/ft.cfg?ex=65a2ea72&is=65907572&hm=bca6f15a23363c39438c1e6a9cf0aaaed43a349c4031aab55ae013c8fb56bf8c&"><span><i class="bx bxs-download"></i></span> Конфиг 1</a>
+                        <br><p><a class="main-btn install anim" href="https://elysiumdlc.fun/нету&#32;ничего&#32;пока&#32;что"><span><i class="bx bxs-download"></i></span> Конфиг 2</a>
+                        <br><p><a class="main-btn install anim" href="https://elysiumdlc.fun/нету&#32;ничего&#32;пока&#32;что"><span><i class="bx bxs-download"></i></span> Конфиг 3</a>
+                    </p>
+                </div>
+            </div>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="question">
+        </div>
+        </section>
+
+
+    <footer> </footer>
+
+    <script>
+
+        // Loading page
+        window.onload = function () {
+          document.body.classList.add('loaded_hiding');
+          window.setTimeout(function () {
+            document.body.classList.add('loaded');
+            document.body.classList.remove('loaded_hiding');
+          }, 500);
+        }
+
+        //Sticky header 
+        document.addEventListener("DOMContentLoaded", function() {
+            const header = document.querySelector("header");
+            window.addEventListener("scroll", function() { 
+                header.classList.toggle("sticky", window.scrollY > 20);
+            });
+        });
+
+        // FAQs
+
+        const faqs = document.querySelectorAll(".faq");
+
+        faqs.forEach((faq) => {
+            faq.addEventListener("click", () => {
+                faq.classList.toggle("active");
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+   <!-- Секция #666 - Пастим сайт -->

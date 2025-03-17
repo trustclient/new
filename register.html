@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru" style="--gradient-color: linear-gradient(330deg, #9929ea 0%, #5808fb 100%);">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - Trust Client</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="shortcut icon" href="img/ellogo.png">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Регистрация</h2>
+        <form id="registerForm">
+            <input type="text" id="username" name="username" placeholder="Логин" required>
+            <input type="password" id="password" name="password" placeholder="Пароль" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль" required>
+            <button type="submit">Зарегистрироваться</button>
+			<p class="info-text"><a href="login.html">Вернутся</a></p>
+        </form>
+        <div id="message"></div>
+    </div>
+    <header class="">
+        <a class="logo" href="index.html">Trust <span>RELEASE</span></a>
+        <ul class="navlist">
+            <li><a style="color: var(--main-color);" href="index1.html">Главная</a></li>
+            <li><a href="vibor.html">Навигация</a></li>
+            <li><a href="https://discord.gg/SVkJ8RFNTB">Дискорд Сервер</a></li>
+            <li><a class="login" href="index2.html">Сменить язык</a></li>
+        </ul>   
+	<script>
+	document.getElementById("registerForm").addEventListener("submit", function(event) {
+		event.preventDefault();
+
+		let username = document.getElementById("username").value.trim();
+		let password = document.getElementById("password").value.trim();
+		let confirmPassword = document.getElementById("confirmPassword").value.trim();
+		let messageBox = document.getElementById("message");
+
+		// Проверка совпадения паролей
+		if (password !== confirmPassword) {
+			messageBox.innerHTML = '<div style="color: red; font-weight: bold;">Пароли не совпадают!</div>';
+			return;
+		}
+
+		// Отправка данных на сервер
+		fetch("register.php", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ username, password })
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				messageBox.innerHTML = '<div style="color: green; font-weight: bold;"> ' + data.message + '</div>';
+				setTimeout(() => { window.location.href = "login.html"; }, 1500);
+			} else {
+				messageBox.innerHTML = '<div style="color: red; font-weight: bold;"> ' + data.message + '</div>';
+			}
+		});
+	});
+	</script>
+</body>
+</html>

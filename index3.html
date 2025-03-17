@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main - Trust Client</title>
+    <link rel="shortcut icon" href="img/ellogo.png">
+    <link href='boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css2@family=Material+Symbols+Outlined%253Aopsz,wght,FILL,GRAD@24,400,1,0.html">
+    <link rel="stylesheet" href="css/main.css@1703620964.css">
+    <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="snowflakes"></div>
+
+    <div class="preloader">
+        <div class="preloader__row">
+          <div class="preloader__item"></div>
+          <div class="preloader__item"></div>
+        </div>
+      </div>
+
+    <header class="">
+        <a class="logo" href="index3.html">Trust <span>RELEASE</span></a>
+        <ul class="navlist">
+            <li><a style="color: var(--main-color);" href="index3.html">Main</a></li>
+            <li><a href="vibor.html">Navigation</a></li>
+            <li><a href="https://discord.gg/SVkJ8RFNTB">Discord Server</a></li>
+            <li><a class="login" href="index1.html">Change the language</a></li>
+			<li><a class="login" href="login.html">Login </a></li>
+        </ul>
+    </header>
+
+    <img class="bg-img" alt="">
+    <div class="gradient"></div>
+    <div class="transition"></div>
+
+    <section id="main">
+        <div class="page-text">
+            <img class="anim" src="img/menu2.png" alt="">
+            <h1 class="main-text anim">Trust Client</h1>
+            <p class="desc-text anim">Play and destroy everyone and everything with the best cheat Trust Client!</p>
+            <a class="main-btn install anim" href="https://funpay.com/users/14080194/"><span></span> Buy</a>
+            <a class="faq anim" href="faq.php.html">FAQ</a>
+        </div>
+    </section>
+
+    <section id="whyus">
+        <div class="whyus-text">
+            <h1 class="sec-title">Why us?</h1>
+            <div class="container">
+                <div class="wbox">
+                    <h1 class="title">Interface</h1>
+                    <p class="desc">The beautiful client interface will not let you get bored and will not eat precious fps.</p>
+                </div>
+                
+                <div class="wbox">
+                    <h1 class="title">Accessibility</h1>
+                    <p class="desc">Our client is free and no worse than paid cheats!.</p>
+                </div>
+                <div class="wbox">
+                    <h1 class="title">Protection</h1>
+                    <p class="desc">We have excellent protection, which allows you not to be afraid of draining the client's sources.</p>
+                </div>
+                <div style="cursor: pointer;" target="_blank" onclick="window.location='https://discord.gg/Jp48Rv8VJC'" class="wbox">
+                    <h1 class="title">Support</h1>
+                    <p class="desc">Our support team will listen to you carefully and help you with any difficulties that arise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="showcase"> 
+        <div class="video-text">
+            <div class="video-showcase">
+				<iframe 
+					style="margin-left: 750px; margin-top: 10px;" 
+					width="560" height="315" 
+					src="https://www.youtube.com/embed/kPCymlt7l-s?autoplay=1&mute=1&loop=1&playlist=kPCymlt7l-s" 
+					frameborder="0" 
+					allow="autoplay; encrypted-media" 
+					allowfullscreen>
+				</iframe>
+            </div>
+            <h1 class="main-text">Trust Client Video Review</h1>
+            <p class="desc-text">This is a review on the free Trust Client in which <br> it demonstrates part of the functionality and part of <br> everything that actually exists</p>
+        </div>
+    </section>
+
+        <section id="join-us">
+            <div class="con-text">
+            </div>
+        </section>
+    <script>
+
+        window.onload = function () {
+          document.body.classList.add('loaded_hiding');
+          window.setTimeout(function () {
+            document.body.classList.add('loaded');
+            document.body.classList.remove('loaded_hiding');
+          }, 500);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const header = document.querySelector("header");
+            window.addEventListener("scroll", function() { 
+                header.classList.toggle("sticky", window.scrollY > 20);
+            });
+        });
+        
+
+let valueDisplays = document.querySelectorAll(".desc-count");
+let interval = 2000;
+let maxEndValue = 0;
+let numSteps = 1000;
+
+valueDisplays.forEach((valueDisplay) => {
+   let endValue = parseInt(valueDisplay.getAttribute("data-val"));
+   maxEndValue = Math.max(maxEndValue, endValue);
+});
+
+let duration = Math.floor(interval / numSteps);
+
+valueDisplays.forEach((valueDisplay) => {
+   let startValue = 0;
+   let endValue = parseInt(valueDisplay.getAttribute("data-val"));
+   let increment = (endValue - startValue) / numSteps;
+   let step = 0;
+
+   let counter = setInterval(function () {
+      startValue += increment;
+      step++;
+      valueDisplay.textContent = Math.round(startValue);
+      if (step >= numSteps) {
+          clearInterval(counter);
+          valueDisplay.textContent = endValue;
+      }
+   }, duration);
+});
+
+
+    </script>
+</body>
+</html>

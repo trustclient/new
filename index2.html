@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Головний - Trust` Client</title>
+    <link rel="shortcut icon" href="img/ellogo.png">
+    <link href='boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css2@family=Material+Symbols+Outlined%253Aopsz,wght,FILL,GRAD@24,400,1,0.html">
+    <link rel="stylesheet" href="css/main.css@1703620964.css">
+    <link href="css/main.css" rel="stylesheet">	
+</head>
+<body>
+
+    <div class="snowflakes"></div>
+
+    <div class="preloader">
+        <div class="preloader__row">
+          <div class="preloader__item"></div>
+          <div class="preloader__item"></div>
+        </div>
+      </div>
+
+    <header class="">
+        <a class="logo" href="index2.html">Trust <span>RELEASE</span></a>
+        <ul class="navlist">
+            <li><a style="color: var(--main-color);" href="index2.html">Головний</a></li>
+            <li><a href="vibor.html">Навігація</a></li>
+            <li><a href="https://discord.gg/SVkJ8RFNTB">Дискорд Сервер</a></li>
+            <li><a class="login" href="index3.html">Змінити мову</a></li>
+        </ul>
+    </header>
+
+    <img class="bg-img" alt="">
+    <div class="gradient"></div>
+    <div class="transition"></div> 
+
+    <section id="main">
+        <div class="page-text">
+            <img class="anim" src="img/menu2.png" alt="">
+            <h1 class="main-text anim">Trust Client</h1>
+            <p class="desc-text anim">Грай та знищуй усіх і все з найкращим читом Trust Client</p>
+            <a class="main-btn install anim" href="https://funpay.com/users/14080194/"><span></span> Купити</a>
+            <a class="faq anim" href="faq.php.html">FAQ</a>
+        </div>
+    </section>
+
+    <section id="whyus">
+        <div class="whyus-text">
+            <h1 class="sec-title">Чому саме ми?</h1>
+            <div class="container">
+                <div class="wbox">
+                    <h1 class="title">Інтерфейс</h1>
+                    <p class="desc">Гарний інтерфейс клієнта не дасть вам занудьгувати і не буде їсти дорогоцінний fps.</p>
+                </div>
+                
+                <div class="wbox">
+                    <h1 class="title">Доступність</h1>
+                    <p class="desc">Наш клієнт безкоштовний, і майже ні чим не відрізняється від платних клієнтів!</p>
+                </div>
+                <div class="wbox">
+                    <h1 class="title">Захист</h1>
+                    <p class="desc">Ми маємо чудовий захист, що дозволяє вам не бояться за слив початкових кодів клієнта.</p>
+                </div>
+                <div style="cursor: pointer;" target="_blank" onclick="window.location='https://discord.gg/Jp48Rv8VJC'" class="wbox">
+                    <h1 class="title">Підтримка</h1>
+                    <p class="desc">Наша підтримка ретельно вас вислухає і допоможе вам з будь-якими виниклими труднощами</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="showcase"> 
+        <div class="video-text">
+            <div class="video-showcase">
+				<iframe 
+					style="margin-left: 750px; margin-top: 10px;" 
+					width="560" height="315" 
+					src="https://www.youtube.com/embed/kPCymlt7l-s?autoplay=1&mute=1&loop=1&playlist=kPCymlt7l-s" 
+					frameborder="0" 
+					allow="autoplay; encrypted-media" 
+					allowfullscreen>
+				</iframe>
+            </div>
+            <h1 class="main-text">Відеоогляд Trust Client</h1>
+            <p class="desc-text">Это обзор на бесплатный клиент Trust Client в котором <br> демонструється частина функціоналу і частина <br> всього того що насправді є</p>
+        </div>
+    </section>
+        <section id="join-us">
+            <div class="con-text">
+            </div>
+        </section>
+    <script>
+
+        window.onload = function () {
+          document.body.classList.add('loaded_hiding');
+          window.setTimeout(function () {
+            document.body.classList.add('loaded');
+            document.body.classList.remove('loaded_hiding');
+          }, 500);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const header = document.querySelector("header");
+            window.addEventListener("scroll", function() { 
+                header.classList.toggle("sticky", window.scrollY > 20);
+            });
+        });
+          
+
+
+let valueDisplays = document.querySelectorAll(".desc-count");
+let interval = 2000;
+let maxEndValue = 0;
+let numSteps = 1000;
+
+valueDisplays.forEach((valueDisplay) => {
+   let endValue = parseInt(valueDisplay.getAttribute("data-val"));
+   maxEndValue = Math.max(maxEndValue, endValue);
+});
+
+let duration = Math.floor(interval / numSteps);
+
+valueDisplays.forEach((valueDisplay) => {
+   let startValue = 0;
+   let endValue = parseInt(valueDisplay.getAttribute("data-val"));
+   let increment = (endValue - startValue) / numSteps;
+   let step = 0;
+
+   let counter = setInterval(function () {
+      startValue += increment;
+      step++;
+      valueDisplay.textContent = Math.round(startValue);
+      if (step >= numSteps) {
+          clearInterval(counter);
+          valueDisplay.textContent = endValue;
+      }
+   }, duration);
+});
+
+
+    </script>
+</body>
+</html>

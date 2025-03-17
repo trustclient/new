@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" style="--gradient-color: linear-gradient(330deg, #9929ea 0%, #5808fb 100%); --gradient-hover-color: linear-gradient(330deg, #8825cf 0%, #4d09d6 100%); --gradient-focus-color: linear-gradient(330deg, #7c22bd 0%, #4809c5 100%);">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - Trust Client</title>
+    <link rel="shortcut icon" href="img/ellogo.png">
+    <link href='boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css2@family=Material+Symbols+Outlined%253Aopsz,wght,FILL,GRAD@24,400,1,0.html">
+    <link rel="stylesheet" href="css/main.css@1703620964.css">
+	
+    <link href="css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/login.css">
+
+    <link rel="stylesheet" href="css2@family=Material+Symbols+Outlined%253Aopsz,wght,FILL,GRAD@24,400,1,0.html"> 
+</head>
+
+<body>
+    <script src="script.js"></script>
+
+    <div class="login-container">
+        <h2>Вход</h2>
+        <form id="loginForm">
+            <input type="text" id="username" name="username" placeholder="Логин" required>
+            <input type="password" id="password" name="password" placeholder="Пароль" required>
+            <button type="submit">Войти</button>
+        </form>
+        <p class="info-text"><a href="register.html">Регистрация</a></p>
+        <div id="message"></div>
+    </div>
+
+    <header class="">
+        <a class="logo" href="index.html">Trust <span>RELEASE</span></a>
+        <ul class="navlist">
+            <li><a style="color: var(--main-color);" href="index1.html">Главная</a></li>
+            <li><a href="vibor.html">Навигация</a></li>
+            <li><a href="https://discord.gg/SVkJ8RFNTB">Дискорд Сервер</a></li>
+            <li><a class="login" href="index2.html">Сменить язык</a></li>
+        </ul>
+	
+
+    <script src="script.js"></script>
+    <script>
+		document.getElementById("loginForm").addEventListener("submit", function(event) {
+			event.preventDefault();
+
+			let username = document.getElementById("username").value;
+			let password = document.getElementById("password").value;
+			let messageBox = document.getElementById("message");
+
+			fetch("https://artem-russiun.github.io/new/login.php", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					username: document.getElementById("username").value,
+					password: document.getElementById("password").value
+				})
+			})
+			.then(response => response.json())
+
+			.then(data => {
+				messageBox.innerHTML = `<div class="${data.error ? 'error' : 'success'}">${data.message}</div>`;
+
+				if (!data.error) {
+					setTimeout(() => { window.location.href = data.redirect; }, 1500);
+				}
+			})
+			.catch(error => {
+				messageBox.innerHTML = `<div class="error">Ошибка соединения с сервером!</div>`;
+			});
+		});
+	
+    </script>
+</body>
+</html>	
