@@ -5,7 +5,12 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type");
+    exit(0);
+}
 
 $json_url = "https://raw.githubusercontent.com/Artem-Russiun/gayporno/refs/heads/main/accounts.json";
 
@@ -27,9 +32,11 @@ if (isset($accounts[$username]) && $accounts[$username]["password"] === $passwor
     $sub_end = $accounts[$username]["sub_end"] ?? "Нет подписки";
 
     // Устанавливаем куки
+    
     setcookie("username", $username, time() + 3600, "/");
     setcookie("uid", $uid, time() + 3600, "/");
     setcookie("hwid", $hwid, time() + 3600, "/");
+    
     setcookie("sub_end", $sub_end, time() + 3600, "/");
 
     echo json_encode(["error" => false, "message" => "Успешный вход!", "redirect" => "pisunf6.html"]);
